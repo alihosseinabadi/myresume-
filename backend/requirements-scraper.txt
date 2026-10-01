@@ -1,0 +1,26 @@
+# MyResume — optional job-link scraping extras
+#
+# The API works with none of these: job import falls back to plain HTTP plus
+# JSON-LD/meta parsing. Install only the engine you actually want.
+#
+#   pip install -r requirements-scraper.txt
+#
+# Engine order comes from SCRAPE_ENGINES in .env — by default:
+#   scrapegraph → playwright → reader → http
+
+# ── A. ScrapeGraphAI, self-hosted (MIT) ────────────────────
+# Free and local, but needs an LLM. Easiest is Ollama:
+#   pip install ollama && ollama pull llama3
+#   SCRAPEGRAPH_LLM_MODEL=ollama/llama3
+scrapegraphai>=1.60
+
+# ── B. Playwright, for JavaScript-heavy boards ──────────────
+# Needed for LinkedIn / Indeed style pages that only render in a browser.
+# After installing, download the browser once:
+#   playwright install chromium
+playwright>=1.45
+
+# ── C. Hosted ScrapeGraphAI API (alternative to A) ──────────
+# No library and no local browser required — just a key in .env:
+#   SCRAPEGRAPH_API_KEY=sgai-...
+# Get one at https://dashboard.scrapegraphai.com  (billed per credit)

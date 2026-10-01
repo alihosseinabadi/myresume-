@@ -1,0 +1,161 @@
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────────────────────
+   MyResume Studio — dark editorial design system.
+   Deliberately unlike the reference product: near-black canvas,
+   electric-lime accent, display-serif headlines.
+   ───────────────────────────────────────────────────────── */
+@theme {
+  --color-void: #0a0918;
+  --color-ink: #100e24;
+  --color-panel: #171430;
+  --color-panel2: #1e1a3d;
+  --color-line: #2c2752;
+  --color-line2: #221e42;
+  --color-text: #f5f3ff;
+  --color-dim: #a9a3ce;
+  --color-dimmer: #746da0;
+  --color-pop: #ff7a59;
+  --color-popdeep: #ff5a33;
+  --color-plum: #a78bfa;
+  --color-mint: #5eead4;
+  --color-rose: #ff4d8d;
+  --color-gold: #ffc65c;
+
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-display: 'Instrument Serif', 'Iowan Old Style', Georgia, serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  --radius-card: 1.25rem;
+  --radius-pill: 999px;
+
+  --animate-drift: drift 24s ease-in-out infinite;
+  --animate-rise: rise 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+  --animate-marquee: marquee 30s linear infinite;
+  --animate-caret: caret 1s step-end infinite;
+  --animate-spin-slow: spin 20s linear infinite;
+}
+
+@keyframes drift {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  33% { transform: translate3d(3%, -4%, 0) scale(1.06); }
+  66% { transform: translate3d(-3%, 3%, 0) scale(0.97); }
+}
+@keyframes rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes caret {
+  50% { opacity: 0; }
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  background: var(--color-void);
+}
+
+body {
+  background: var(--color-void);
+  color: var(--color-text);
+  overflow-x: hidden;
+}
+
+::selection { background: var(--color-pop); color: #1a0d08; }
+
+:focus-visible {
+  outline: 2px solid var(--color-pop);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+.shell { width: 100%; max-width: 1160px; margin: 0 auto; padding: 0 20px; }
+@media (min-width: 768px) { .shell { padding: 0 32px; } }
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-pop);
+}
+
+.display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+/* Warm gradient CTA — the signature button */
+.btn-primary {
+  background-image: linear-gradient(120deg, #ff7a59, #ff4d8d 55%, #a78bfa);
+  color: #fff;
+  box-shadow: 0 18px 40px -20px rgba(255, 90, 51, 0.85);
+  transition: filter 0.2s ease, transform 0.2s ease;
+}
+.btn-primary:hover { filter: brightness(1.08); }
+.btn-primary:active { transform: translateY(1px); }
+
+.panel {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.015));
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-card);
+  backdrop-filter: blur(14px);
+}
+
+.panel-flat {
+  background: var(--color-panel);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-card);
+}
+
+.aurora {
+  background:
+    radial-gradient(620px 340px at 18% 6%, rgba(255, 122, 89, 0.22), transparent 62%),
+    radial-gradient(560px 320px at 84% 2%, rgba(167, 139, 250, 0.26), transparent 64%),
+    radial-gradient(680px 400px at 58% 92%, rgba(255, 77, 141, 0.16), transparent 66%);
+}
+
+.grain::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 60;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+/* Hidden state applies only once JS is confirmed (`js` class on <html>), so
+   crawlers, print and no-JS visitors always see content. */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.js [data-reveal].in-view { opacity: 1; transform: none; }
+
+.rail {
+  display: flex;
+  gap: 18px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: 4px 4px 14px;
+}
+.rail > * { scroll-snap-align: start; flex: 0 0 auto; }
+.rail::-webkit-scrollbar { height: 6px; }
+.rail::-webkit-scrollbar-track { background: var(--color-line2); border-radius: 3px; }
+.rail::-webkit-scrollbar-thumb { background: var(--color-line); border-radius: 3px; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .js [data-reveal] { opacity: 1; transform: none; transition: none; }
+  .animate-drift, .animate-marquee, .animate-spin-slow { animation: none !important; }
+}
